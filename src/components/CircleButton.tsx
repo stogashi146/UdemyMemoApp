@@ -3,16 +3,21 @@ import { View, Text, StyleSheet } from "react-native";
 
 interface CircleButtonProps {
   children: string;
+  style: any;
 }
 
 export default function CircleButton(props: CircleButtonProps) {
-  const { children } = props;
+  const { children, style } = props;
   return (
-    <View style={styles.circleButton}>
+    <View style={[styles.circleButton, style]}>
       <Text style={styles.circleButtonLabel}>{children}</Text>
     </View>
   );
 }
+
+CircleButton.defaultProps = {
+  style: {},
+};
 
 const styles = StyleSheet.create({
   circleButton: {
@@ -35,7 +40,7 @@ const styles = StyleSheet.create({
   },
   circleButtonLabel: {
     color: "#fff",
-    paddingBottom: "8px",
+    // paddingBottom: 8,
     fontSize: 40,
     lineHeight: 40,
   },
