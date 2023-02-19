@@ -1,27 +1,30 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { string } from "prop-types";
-import { IconProps } from "@expo/vector-icons/build/createIconSet";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  GestureResponderEvent,
+} from "react-native";
 import Icon from "./Icon";
 
 interface CircleButtonProps {
   style: any;
   name: "plus" | "check" | "pencil" | "delete";
+  onPress?: (event: GestureResponderEvent) => void;
 }
 
 export default function CircleButton(props: CircleButtonProps) {
-  const { style, name } = props;
+  const { style, name, onPress } = props;
   return (
-    <View style={[styles.circleButton, style]}>
+    <TouchableOpacity style={[styles.circleButton, style]} onPress={onPress}>
       <Icon name={name} size={40} color="white" />
-    </View>
+    </TouchableOpacity>
   );
 }
 
 CircleButton.defaultProps = {
   style: {},
   name: "plus",
+  onPress: null,
 };
 
 const styles = StyleSheet.create({
