@@ -3,17 +3,18 @@ import { View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { string } from "prop-types";
 import { IconProps } from "@expo/vector-icons/build/createIconSet";
+import Icon from "./Icon";
 
 interface CircleButtonProps {
   style: any;
-  name: "plus" | "check" | "edit-2" | "x";
+  name: "plus" | "check" | "pencil" | "delete";
 }
 
 export default function CircleButton(props: CircleButtonProps) {
   const { style, name } = props;
   return (
     <View style={[styles.circleButton, style]}>
-      <Feather name={name} size={32} color="white" />
+      <Icon name={name} size={40} color="white" />
     </View>
   );
 }
