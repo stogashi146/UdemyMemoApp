@@ -4,16 +4,13 @@ import {
   Text,
   TextInput,
   View,
-  Alert,
   TouchableOpacity,
 } from "react-native";
-import AppBar from "../components/AppBar";
 import Button from "../components/Button";
 
 export default function SignUpScreen() {
   return (
     <View style={styles.container}>
-      <AppBar />
       <View style={styles.inner}>
         <Text style={styles.title}>SignUp</Text>
         <TextInput style={styles.input} value="Email Adress" />
