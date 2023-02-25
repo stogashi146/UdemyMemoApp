@@ -1,17 +1,37 @@
 import React, { useState } from "react";
 import {
+  Alert,
   StyleSheet,
   Text,
   TextInput,
   View,
   TouchableOpacity,
 } from "react-native";
+import firebase from "firebase";
+
 import Button from "../components/Button";
 
 export default function LogInScreen(props: any) {
   const { navigation } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handlePress = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user?.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MemoList" }],
+        });
+      })
+      .catch((error) => {
+        Alert.alert(error.code, error.message);
+      });
+  };
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -34,15 +54,7 @@ export default function LogInScreen(props: any) {
           secureTextEntry
           textContentType="password"
         />
-        <Button
-          label="Submit"
-          onPress={() =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "MemoList" }],
-            })
-          }
-        />
+        <Button label="Submit" onPress={() => handlePress()} />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not Registred?</Text>
           <TouchableOpacity
