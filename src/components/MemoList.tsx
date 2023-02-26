@@ -1,33 +1,58 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native"; //
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  FlatList,
+} from "react-native"; //
 import { useNavigation } from "@react-navigation/native";
 
 import Icon from "./Icon";
 
-export default function MemoList() {
+export default function MemoList(props: any) {
+  const { memos } = props;
   // navigationのPropsを受け取れなくても使用可能にする
   const navigation: any = useNavigation();
-  return (
-    <View>
+
+  function renderItem({ item }: any) {
+    return (
       <TouchableOpacity
+        key={item.id}
         style={styles.memoListItem}
         onPress={() => {
           navigation.navigate("MemoDetail");
         }}
       >
         <View>
-          <Text style={styles.memoListItemTitle}>買い物リスト</Text>
-          <Text style={styles.memoListItemDate}>2020年12月24日 10:00</Text>
+          <Text style={styles.memoListItemTitle} numberOfLines={1}>
+            {item.bodyText}
+          </Text>
+          <Text style={styles.memoListItemDate}>{String(item.updatedAt)}</Text>
         </View>
         <TouchableOpacity onPress={() => Alert.alert("Are you sure?")}>
           <Icon name="delete" size={24} color="#b0b0b0" />
         </TouchableOpacity>
       </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={memos}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   memoListItem: {
     backgroundColor: "#fff",
     flexDirection: "row",
