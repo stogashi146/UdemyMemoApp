@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   StyleSheet,
@@ -15,6 +15,27 @@ export default function LogInScreen(props: any) {
   const { navigation } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    console.log("useEffect!");
+    return () => {
+      console.log("Unmount");
+    };
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      console.log("実行");
+
+      if (user) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MemoList" }],
+        });
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   const handlePress = () => {
     firebase
