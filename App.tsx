@@ -12,12 +12,14 @@ import SignUpScreen from "./src/screens/SignUpScreen";
 
 import { firebaseConfig } from "./env";
 
-const Stack = createNativeStackNavigator();
+require("firebase/firestore");
 
 // 既に初期化されているかチェック
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
