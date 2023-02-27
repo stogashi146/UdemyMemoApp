@@ -59,7 +59,10 @@ export default function MemoDetailScreen(props: memoDetail) {
         style={{ top: 60, bottom: "auto" }}
         name="pencil"
         onPress={() => {
-          navigation.navigate("MemoEdit");
+          navigation.navigate("MemoEdit", {
+            id: memo?.id,
+            bodyText: memo?.bodyText,
+          });
         }}
       />
     </View>
