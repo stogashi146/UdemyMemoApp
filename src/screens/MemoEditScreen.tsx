@@ -21,12 +21,13 @@ export default function MemoEditScreen(props: memoEdit) {
   const { navigation, route } = props;
   const { id, bodyText } = route.params;
   const [body, setBody] = useState(bodyText);
-
+  console.log(id);
   function handlePress() {
     const { currentUser } = firebase.auth();
     if (currentUser) {
       const db = firebase.firestore();
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
+
       ref
         .set(
           {

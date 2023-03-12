@@ -28,7 +28,6 @@ export default function MemoDetailScreen(props: memoDetail) {
       const db = firebase.firestore();
       const ref = db.collection(`users/${currentUser.uid}/memos`).doc(id);
       unsubscribe = ref.onSnapshot((doc: any) => {
-        console.log(doc.id, doc.data());
         const data: memoData = doc.data();
         setMemo({
           id: data.id,
@@ -60,7 +59,7 @@ export default function MemoDetailScreen(props: memoDetail) {
         name="pencil"
         onPress={() => {
           navigation.navigate("MemoEdit", {
-            id: memo?.id,
+            id: id,
             bodyText: memo?.bodyText,
           });
         }}

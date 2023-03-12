@@ -10,11 +10,13 @@ import {
 import firebase from "firebase";
 
 import Button from "../components/Button";
+import Loading from "../components/Loading";
 
 export default function LogInScreen(props: any) {
   const { navigation } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
@@ -23,12 +25,15 @@ export default function LogInScreen(props: any) {
           index: 0,
           routes: [{ name: "MemoList" }],
         });
+      } else {
+        setLoading(false);
       }
     });
     return unsubscribe;
   }, []);
 
   const handlePress = () => {
+    setLoading(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -42,10 +47,14 @@ export default function LogInScreen(props: any) {
       })
       .catch((error) => {
         Alert.alert(error.code, error.message);
+      })
+      .then(() => {
+        setLoading(false);
       });
   };
   return (
     <View style={styles.container}>
+      <Loading isLoading={isLoading} />
       <View style={styles.inner}>
         <Text style={styles.title}>Login</Text>
         <TextInput

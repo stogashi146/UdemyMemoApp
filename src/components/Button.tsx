@@ -10,12 +10,13 @@ import {
 interface ButtonProps {
   label: string;
   onPress?: (event: GestureResponderEvent) => void;
+  style?: any;
 }
 
 export default function Button(props: ButtonProps) {
-  const { label, onPress } = props;
+  const { label, onPress, style } = props;
   return (
-    <TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
+    <TouchableOpacity style={[styles.buttonContainer, style]} onPress={onPress}>
       <Text style={styles.buttonLabel}>{label}</Text>
     </TouchableOpacity>
   );
