@@ -5,12 +5,16 @@ import firebase from "firebase";
 
 import CircleButton from "../components/CircleButton";
 import KeyboardSafeView from "../components/KeyboardSafeView";
+import Loading from "../components/Loading";
+import { is } from "date-fns/locale";
 
 export default function MemoCreateScreen(props: any) {
   const { navigation } = props;
   const [bodyText, setBodyText] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   function handlePress() {
+    setLoading(true);
     const { currentUser } = firebase.auth();
     const db = firebase.firestore();
     const ref = db.collection(`users/${currentUser?.uid}/memos`);
@@ -25,11 +29,15 @@ export default function MemoCreateScreen(props: any) {
       })
       .catch((error) => {
         console.log("Error", error);
+      })
+      .then(() => {
+        setLoading(false);
       });
   }
   return (
     // NOTE: キーボードの高さ分Containerを押し上げる
     <KeyboardSafeView style={styles.container}>
+      <Loading isLoading={isLoading} />
       <View style={styles.inputContainer}>
         <TextInput
           value={bodyText}

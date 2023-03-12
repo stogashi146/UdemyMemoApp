@@ -4,6 +4,7 @@ import { View, StyleSheet, TextInput, Alert } from "react-native";
 import CircleButton from "../components/CircleButton";
 import KeyboardSafeView from "../components/KeyboardSafeView";
 import firebase from "firebase";
+import { translateErrors } from "../utils";
 
 interface memoData {
   id: string;
@@ -40,7 +41,8 @@ export default function MemoEditScreen(props: memoEdit) {
           navigation.goBack();
         })
         .catch((error) => {
-          Alert.alert(error.code);
+          const errorMsg = translateErrors(error.code);
+          Alert.alert(errorMsg.title, errorMsg.description);
         });
     }
   }
